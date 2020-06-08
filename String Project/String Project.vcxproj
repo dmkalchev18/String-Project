@@ -147,7 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Hangman.cpp" />
     <ClCompile Include="String Project.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Hangman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
