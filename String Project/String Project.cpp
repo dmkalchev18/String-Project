@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
-#include  <ctime>
+#include <ctime>
 #include "Hangman.h"
 using namespace std;
 
@@ -15,7 +15,7 @@ int readInt(string s)
 		cin.ignore(INT_MAX, '\n');
 		cout << "Incorrect value, try again!" << endl;
 		// The argument "s" as the specific message, example: "Day: ", "Month: " 
-		cout << s; 
+		cout << s;
 	}
 	return a;
 }
@@ -23,7 +23,7 @@ int readInt(string s)
 void greetings() {
 	cout << "Hello my friend\n";
 	cout << "Welcome to our shitty bugged program called besenica";
-    cout<<endl;
+	cout << endl;
 }
 
 bool mainMenu() {
@@ -38,7 +38,7 @@ bool mainMenu() {
 	cout << "Enter your choice: ";
 	choice = readInt("Enter your choice: ");
 
-		
+
 	switch (choice)
 	{
 		case 1:
@@ -56,15 +56,16 @@ bool mainMenu() {
 }
 
 void hangman() {
+
 }
 
 int main()
 {
-	SetConsoleOutputCP(1251);
 	system("color 0b");
 	srand(time(NULL));
 	//greetings();
 	bool isRunning = true;
+	init();
 	displayHangman(6);
 	//pickRandomWord();
 	/*do{

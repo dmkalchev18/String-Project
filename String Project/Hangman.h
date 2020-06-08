@@ -2,10 +2,9 @@
 #include <iostream>
 #include <string>
 using namespace std;
- 
-void availableLetterCheck();
-void pickRandomWord();
-int findLength(int* arr);
+
+string pickRandomWord();
 void displayHangman(int mistakes);
+void init();
 
   
