@@ -65,7 +65,8 @@ int main()
 	srand(time(NULL));
 	//greetings();
 	bool isRunning = true;
-	pickRandomWord();
+	displayHangman(6);
+	//pickRandomWord();
 	/*do{
 		isRunning = mainMenu();
 	} while(isRunning);*/
