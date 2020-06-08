@@ -36,7 +36,7 @@ bool mainMenu() {
 	cout << "3. neshto3\n";
 	cout << "4. neshto4\n";
 	cout << "Enter your choice: ";
-	int choice = readInt("Enter your choice: ");
+	choice = readInt("Enter your choice: ");
 
 		
 	switch (choice)
@@ -63,11 +63,10 @@ int main()
 	SetConsoleOutputCP(1251);
 	system("color 0b");
 	srand(time(NULL));
-	cout << "test";
-	greetings();
+	//greetings();
 	bool isRunning = true;
-
-	do{
+	pickRandomWord();
+	/*do{
 		isRunning = mainMenu();
-	} while(isRunning);
+	} while(isRunning);*/
 }

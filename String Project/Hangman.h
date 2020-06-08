@@ -4,5 +4,7 @@
 using namespace std;
  
 void availableLetterCheck();
+void pickRandomWord();
+int findLength(int* arr);
 
   
