@@ -8,6 +8,8 @@ using namespace std;
 vector<string> gameWords;
 vector<char> avLetters;
 vector<string> hangLines;
+string usedLetters[26];
+string correctLetters[26];
 
 void initGameWord() {
 	gameWords.push_back("Banana");
@@ -21,11 +23,11 @@ void initGameWord() {
 	gameWords.push_back("Orange");
 	gameWords.push_back("Purple");
 	gameWords.push_back("Apartment");
-	gameWords.push_back("Programming"),
-		gameWords.push_back("Remote control");
+	gameWords.push_back("Programming");
+	gameWords.push_back("Remote control");
 	gameWords.push_back("Apple");
 	gameWords.push_back("Peach");
-	gameWords.push_back("Telepfone");
+	gameWords.push_back("Telephone");
 	gameWords.push_back("Microphone");
 	gameWords.push_back("Truck");
 	gameWords.push_back("Window");
@@ -88,11 +90,55 @@ string pickRandomWord() {
 	return gameWords[randomIndex];
 }
 
-void displayHangman(int mistakes)
-{
-	string word = pickRandomWord(); // VAJNO E DA SE SMENI INACHE SI TAKOVALO ...
-	int padLenght = (36 - word.length()) / 2;
+bool checkLetters(string word, char userChoice){
+	for (int i = 0; i < word.size(); i++)
+	{
+		if (userChoice == tolower(word[i]))
+			return true;
+	}
+	return false;
+}
 
+void deleteLetters(char userChoice)
+{
+	for (int i = 0; i < avLetters.size(); i++)
+	{
+		if (tolower(avLetters[i]) == userChoice)
+		{
+			avLetters[i] = ' ';
+			break;
+		}
+	}
+}
+
+string stringTolower(string str)
+{
+	for(int i=0; i<str.length();i++)
+	{
+		str[i]=tolower(str[i]);
+	}
+	return str;
+}
+
+void mainHangmanMenu(){
+	int mistakes=0;
+	bool isWordGuessed=false;
+	string word = pickRandomWord();
+
+	do{
+	displayHangman(mistakes,word);
+	}
+	while(isWordGuessed || mistakes<=6); 
+
+}
+
+void displayHangman(int& mistakes, string word)
+{
+	int padLenght = (34 - (word.length()*2-1)) / 2;
+	
+	word=stringTolower(word);
+	system("cls");
+	cout<<word;
 	cout << "+---------------------------------+" << endl;
 	cout << "|            HANG MAN             |" << endl;
 	cout << "+---------------------------------+" << endl;
@@ -139,6 +185,37 @@ void displayHangman(int mistakes)
 	{
 		cout<<" ";
 	}
+	for (int i = 0; i < word.length(); i++)
+	{
+		if(word[i]==' ')
+			cout<<"  ";
+		else
+			cout<<"_ ";
+	}
+	for (int i = 0; i < padLenght-1; i++)
+	{
+		cout << " ";
+	}
+	cout << "|" << endl;
+	cout << "+---------------------------------+" << endl;
+	
+	cout<<"Enter a letter: ";
+	char userChoice;
+	int correctLettersCounter = 0, usedLettersCounter = 0;
+	cin >> userChoice;
+	userChoice=tolower(userChoice);
+
+	
+	if (checkLetters(word, userChoice))
+	{
+		correctLetters[correctLettersCounter++] = userChoice;
+	}
+	else
+		mistakes++;
+	deleteLetters(userChoice);
+	usedLetters[usedLettersCounter++] = userChoice;
+	 cout << mistakes;
+
 }
 
 /*
@@ -177,5 +254,4 @@ void displayHangman(int mistakes)
 		=> display letter + space
 	else
 		=> display underscore + space
-
 */

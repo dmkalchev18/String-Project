@@ -4,7 +4,7 @@
 using namespace std;
 
 string pickRandomWord();
-void displayHangman(int mistakes);
+void displayHangman(int& mistakes, string word);
 void init();
-
+void mainHangmanMenu();
   

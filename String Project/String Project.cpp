@@ -31,7 +31,7 @@ bool mainMenu() {
 
 	cout << "|==========|";
 	cout << "Menu choice\n";
-	cout << "1. neshto1\n";
+	cout << "1. Play Hangman\n";
 	cout << "2. neshto2\n";
 	cout << "3. neshto3\n";
 	cout << "4. neshto4\n";
@@ -42,6 +42,7 @@ bool mainMenu() {
 	switch (choice)
 	{
 		case 1:
+		mainHangmanMenu();
 			break;
 		case 2:
 			break;
@@ -55,18 +56,16 @@ bool mainMenu() {
 	}
 }
 
-void hangman() {
-
-}
-
 int main()
 {
 	system("color 0b");
 	srand(time(NULL));
+	int mistakes = 0;
 	//greetings();
 	bool isRunning = true;
 	init();
-	displayHangman(6);
+	mainMenu();
+	
 	//pickRandomWord();
 	/*do{
 		isRunning = mainMenu();
