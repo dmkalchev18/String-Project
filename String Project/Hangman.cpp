@@ -8,7 +8,7 @@ using namespace std;
 vector<string> gameWords;
 vector<char> avLetters;
 vector<string> hangLines;
-char usedLetters[26];
+string usedLetters;
 char correctLetters[26];
 int correctLettersCounter = 0, usedLettersCounter = 0;
 
@@ -62,6 +62,11 @@ void initGameWord() {
 	gameWords.push_back("Desk");
 }
 
+void win()
+{
+	cout << "Congratulations, you win!" << endl;
+}
+
 void initAvLetters() {
 	for (char i = 'A'; i <= 'Z'; i++)
 	{
@@ -91,7 +96,7 @@ string pickRandomWord() {
 	return gameWords[randomIndex];
 }
 
-bool checkLetters(string word, char userChoice){
+bool checkLetters(string word, char userChoice) {
 	for (int i = 0; i < word.size(); i++)
 	{
 		if (userChoice == tolower(word[i]))
@@ -112,66 +117,38 @@ void deleteLetters(char userChoice)
 	}
 }
 
-bool isInUsedLetters(string word)
-{
-	for(int i=0;i<word.length();i++)
-	{
-		for (int j = 0; j < usedLettersCounter; j++)
-		{
-			if (word[i] == usedLetters[j])
-				return true;
-		}
-	}
-	return false;
-}
-
 void displayLettersInWord(string word)
 {
-	if (correctLettersCounter > 0 && isInUsedLetters(word))
+	for (int i = 0; i < word.length(); i++)
 	{
-		for (int j = 0; j < correctLettersCounter; j++)
-		{
-
-			for (int i = 0; i < word.length(); i++)
-			{
-				if (word[i] == correctLetters[j])
-					cout << word[i] << " ";
-				else
-					cout << "_ ";
-			}
-
-		}
-	}
-	else 
-	{
-		cout << "_ ";
+		if (usedLetters.find(word[i]) != string::npos)
+			cout << word[i] << " ";
+		else
+			cout << "_ ";
 	}
 }
-	
-
 
 string stringTolower(string str)
 {
-	for(int i=0; i<str.length();i++)
+	for (int i = 0; i < str.length(); i++)
 	{
-		str[i]=tolower(str[i]);
+		str[i] = tolower(str[i]);
 	}
 	return str;
 }
 
-void mainHangmanMenu(){
-	int mistakes=0;
-	bool isWordGuessed=false;
+void mainHangmanMenu() {
+	int mistakes = 0;
+	bool isWordGuessed = false;
 	string word = pickRandomWord();
 
-	do{
-	displayHangman(mistakes,word);
-	}
-	while(isWordGuessed || mistakes<=6); 
+	do {
+		displayHangman(mistakes, word);
+	} while (isWordGuessed || mistakes <= 6);
 
 }
 
-string getGuessedLetter(string word,char letters[])
+string getGuessedLetter(string word, char letters[])
 {
 	for (size_t i = 0; i < word.length(); i++)
 	{
@@ -180,7 +157,7 @@ string getGuessedLetter(string word,char letters[])
 		for (int j = 0; j < word.length(); j++)
 		{
 			if (word[i] == letters[j])
-				return letters[j]+" ";
+				return letters[j] + " ";
 		}
 	}
 	return "_ ";
@@ -188,14 +165,14 @@ string getGuessedLetter(string word,char letters[])
 
 void displayHangman(int& mistakes, string word)
 {
-	int padLenght = (34 - (word.length()*2-1)) / 2;
+	int padLenght = (34 - (word.length() * 2 - 1)) / 2;
 
 	char userChoice;
-	
 
-	word=stringTolower(word);
+
+	word = stringTolower(word);
 	system("cls");
-	cout<<word;
+	cout << word;
 	cout << "+---------------------------------+" << endl;
 	cout << "|            HANG MAN             |" << endl;
 	cout << "+---------------------------------+" << endl;
@@ -240,22 +217,22 @@ void displayHangman(int& mistakes, string word)
 	cout << "|";
 	for (int i = 0; i < padLenght; i++)
 	{
-		cout<<" ";
+		cout << " ";
 	}
 	displayLettersInWord(word);
-	for (int i = 0; i < padLenght-1; i++)
+	for (int i = 0; i < padLenght - 1; i++)
 	{
 		cout << " ";
 	}
 	cout << "|" << endl;
 	cout << "+---------------------------------+" << endl;
-	
-	cout<<"Enter a letter: ";
-	
-	cin >> userChoice;
-	userChoice=tolower(userChoice);
 
-	
+	cout << "Enter a letter: ";
+
+	cin >> userChoice;
+	userChoice = tolower(userChoice);
+
+
 	if (checkLetters(word, userChoice))
 	{
 		correctLetters[correctLettersCounter++] = userChoice;
@@ -263,13 +240,11 @@ void displayHangman(int& mistakes, string word)
 	else
 		mistakes++;
 	deleteLetters(userChoice);
-	usedLetters[usedLettersCounter++] = userChoice;
-	 cout << mistakes;
+	usedLetters += userChoice;
+	//usedLetters[usedLettersCounter++] = userChoice;
+	cout << mistakes;
 
 }
-
-
-
 /*
 +---------------------------------+
 |             HANG MAN            |

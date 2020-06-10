@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <ctime>
 #include "Hangman.h"
+#include "Search.h"
 using namespace std;
 
 int readInt(string s)
@@ -45,6 +46,7 @@ bool mainMenu() {
 		mainHangmanMenu();
 			break;
 		case 2:
+		cout<<findSentence("test test. uga buga.","buga");
 			break;
 		case 3:
 			break;
