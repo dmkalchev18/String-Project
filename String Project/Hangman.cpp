@@ -8,8 +8,9 @@ using namespace std;
 vector<string> gameWords;
 vector<char> avLetters;
 vector<string> hangLines;
-string usedLetters[26];
-string correctLetters[26];
+char usedLetters[26];
+char correctLetters[26];
+int correctLettersCounter = 0, usedLettersCounter = 0;
 
 void initGameWord() {
 	gameWords.push_back("Banana");
@@ -111,6 +112,44 @@ void deleteLetters(char userChoice)
 	}
 }
 
+bool isInUsedLetters(string word)
+{
+	for(int i=0;i<word.length();i++)
+	{
+		for (int j = 0; j < usedLettersCounter; j++)
+		{
+			if (word[i] == usedLetters[j])
+				return true;
+		}
+	}
+	return false;
+}
+
+void displayLettersInWord(string word)
+{
+	if (correctLettersCounter > 0 && isInUsedLetters(word))
+	{
+		for (int j = 0; j < correctLettersCounter; j++)
+		{
+
+			for (int i = 0; i < word.length(); i++)
+			{
+				if (word[i] == correctLetters[j])
+					cout << word[i] << " ";
+				else
+					cout << "_ ";
+			}
+
+		}
+	}
+	else 
+	{
+		cout << "_ ";
+	}
+}
+	
+
+
 string stringTolower(string str)
 {
 	for(int i=0; i<str.length();i++)
@@ -132,10 +171,28 @@ void mainHangmanMenu(){
 
 }
 
+string getGuessedLetter(string word,char letters[])
+{
+	for (size_t i = 0; i < word.length(); i++)
+	{
+		if (word[i] == ' ')
+			return "  ";
+		for (int j = 0; j < word.length(); j++)
+		{
+			if (word[i] == letters[j])
+				return letters[j]+" ";
+		}
+	}
+	return "_ ";
+}
+
 void displayHangman(int& mistakes, string word)
 {
 	int padLenght = (34 - (word.length()*2-1)) / 2;
+
+	char userChoice;
 	
+
 	word=stringTolower(word);
 	system("cls");
 	cout<<word;
@@ -185,13 +242,7 @@ void displayHangman(int& mistakes, string word)
 	{
 		cout<<" ";
 	}
-	for (int i = 0; i < word.length(); i++)
-	{
-		if(word[i]==' ')
-			cout<<"  ";
-		else
-			cout<<"_ ";
-	}
+	displayLettersInWord(word);
 	for (int i = 0; i < padLenght-1; i++)
 	{
 		cout << " ";
@@ -200,8 +251,7 @@ void displayHangman(int& mistakes, string word)
 	cout << "+---------------------------------+" << endl;
 	
 	cout<<"Enter a letter: ";
-	char userChoice;
-	int correctLettersCounter = 0, usedLettersCounter = 0;
+	
 	cin >> userChoice;
 	userChoice=tolower(userChoice);
 
@@ -217,6 +267,8 @@ void displayHangman(int& mistakes, string word)
 	 cout << mistakes;
 
 }
+
+
 
 /*
 +---------------------------------+
