@@ -4,6 +4,7 @@
 #include <ctime>
 #include "Hangman.h"
 #include "Search.h"
+#include <vector>
 using namespace std;
 
 int readInt(string s)
@@ -27,7 +28,7 @@ void greetings() {
 	cout << endl;
 }
 
-bool mainMenu(string text,string* result) {
+bool mainMenu(string text,vector<string> results2) {
 	int choice;
 
 	cout << "|==========|";
@@ -45,8 +46,8 @@ bool mainMenu(string text,string* result) {
 		mainHangmanMenu();
 		return true;
 		case 2:
-		findSentence(text,"pgkpi",result);
-		displaySentence(result);
+		findSentence(text,"elek",results2);
+		displaySentence(results2);
 			break;
 		case 3:
 			break;
@@ -64,6 +65,7 @@ int main()
 
 	srand(time(NULL));
 	string results[100];
+	vector<string> results2;
 	init();
 	int mistakes = 0;
 	bool isRunning = true;
@@ -73,6 +75,6 @@ int main()
 	
 	
 	do{
-		isRunning = mainMenu(text,results);
+		isRunning = mainMenu(text,results2);
 	} while(isRunning);
 }
