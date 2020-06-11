@@ -2,6 +2,7 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include <algorithm>
 #include "Hangman.h"
 using namespace std;
 
@@ -144,7 +145,7 @@ void mainHangmanMenu() {
 
 	do {
 		displayHangman(mistakes, word);
-	} while (isWordGuessed || mistakes <= 6);
+	} while (isWordGuessed || mistakes < 6);
 
 }
 
@@ -161,6 +162,27 @@ string getGuessedLetter(string word, char letters[])
 		}
 	}
 	return "_ ";
+}
+
+bool getUniqueLettersInWord(string word)
+{
+	int counter = 0;
+	for (int i = 0; i < word.length(); i++)
+	{
+		for (int j = 0; j < correctLettersCounter; j++)
+		{
+			if (word.find(correctLetters[j]) != string::npos)
+			{
+				counter++;
+			}
+		}
+
+	}
+	if (counter == word.length())
+	{
+		return true;
+	}
+	return false;
 }
 
 void displayHangman(int& mistakes, string word)
@@ -215,15 +237,18 @@ void displayHangman(int& mistakes, string word)
 	cout << "|         Guess the word          |" << endl;
 	cout << "+---------------------------------+" << endl;
 	cout << "|";
+
 	for (int i = 0; i < padLenght; i++)
 	{
 		cout << " ";
 	}
+
 	displayLettersInWord(word);
 	for (int i = 0; i < padLenght - 1; i++)
 	{
 		cout << " ";
 	}
+
 	cout << "|" << endl;
 	cout << "+---------------------------------+" << endl;
 
@@ -239,6 +264,7 @@ void displayHangman(int& mistakes, string word)
 	}
 	else
 		mistakes++;
+
 	deleteLetters(userChoice);
 	usedLetters += userChoice;
 	//usedLetters[usedLettersCounter++] = userChoice;

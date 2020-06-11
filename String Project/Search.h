@@ -4,5 +4,5 @@
 using namespace std;
 
 void extractData(string& data);
-string findSentence(string text, string word);
-
+void findSentence(string text, string word, string* resultSentences);
+void displaySentence(string* result);

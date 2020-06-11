@@ -27,7 +27,7 @@ void greetings() {
 	cout << endl;
 }
 
-bool mainMenu() {
+bool mainMenu(string text,string* result) {
 	int choice;
 
 	cout << "|==========|";
@@ -39,14 +39,14 @@ bool mainMenu() {
 	cout << "Enter your choice: ";
 	choice = readInt("Enter your choice: ");
 
-
 	switch (choice)
 	{
 		case 1:
 		mainHangmanMenu();
 			break;
 		case 2:
-		cout<<findSentence("test test. uga buga.","buga");
+		findSentence(text,"pgkpi",result);
+		displaySentence(result);
 			break;
 		case 3:
 			break;
@@ -62,11 +62,14 @@ int main()
 {
 	system("color 0b");
 	srand(time(NULL));
+	string results[100];
 	int mistakes = 0;
-	//greetings();
 	bool isRunning = true;
+	string text;
+	extractData(text);
+	cout << text;
 	init();
-	mainMenu();
+	mainMenu(text, results);
 	
 	//pickRandomWord();
 	/*do{
