@@ -43,7 +43,7 @@ bool mainMenu(string text,string* result) {
 	{
 		case 1:
 		mainHangmanMenu();
-			break;
+		return true;
 		case 2:
 		findSentence(text,"pgkpi",result);
 		displaySentence(result);
@@ -61,18 +61,18 @@ bool mainMenu(string text,string* result) {
 int main()
 {
 	system("color 0b");
+
 	srand(time(NULL));
 	string results[100];
+	init();
 	int mistakes = 0;
 	bool isRunning = true;
 	string text;
 	extractData(text);
 	cout << text;
-	init();
-	mainMenu(text, results);
 	
-	//pickRandomWord();
-	/*do{
-		isRunning = mainMenu();
-	} while(isRunning);*/
+	
+	do{
+		isRunning = mainMenu(text,results);
+	} while(isRunning);
 }

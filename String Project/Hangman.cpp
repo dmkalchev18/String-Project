@@ -14,6 +14,7 @@ char correctLetters[26];
 int correctLettersCounter = 0, usedLettersCounter = 0;
 
 void initGameWord() {
+	//int v1 = rand() % 100;
 	gameWords.push_back("Banana");
 	gameWords.push_back("Airplane");
 	gameWords.push_back("Cousin");
@@ -26,7 +27,6 @@ void initGameWord() {
 	gameWords.push_back("Purple");
 	gameWords.push_back("Apartment");
 	gameWords.push_back("Programming");
-	gameWords.push_back("Remote control");
 	gameWords.push_back("Apple");
 	gameWords.push_back("Peach");
 	gameWords.push_back("Telephone");
@@ -63,9 +63,15 @@ void initGameWord() {
 	gameWords.push_back("Desk");
 }
 
-void win()
-{
-	cout << "Congratulations, you win!" << endl;
+void clearVariables() {
+	for (int i = 0; i < 26; i++)
+	{
+		correctLetters[i] = '\0';
+	}
+
+	usedLetters = "";
+	correctLettersCounter = 0;
+	usedLettersCounter = 0;
 }
 
 void initAvLetters() {
@@ -88,6 +94,7 @@ void init() {
 	initGameWord();
 	initAvLetters();
 	initHangLines();
+
 }
 
 string pickRandomWord() {
@@ -147,14 +154,18 @@ string stringTolower(string str)
 void mainHangmanMenu() {
 	int mistakes = 0;
 	bool isWordGuessed = false;
+
 	GAME_STATUS gs;
+
 	string word = pickRandomWord();
 
 	do {
 		gs = displayHangman(mistakes, word);
 
-		if (gs == GAME_STATUS::HUNG)
-			cout << "HUNG";
+		if (gs == GAME_STATUS::HUNG) {
+			cout << "You lose!\nThe correct word was: " << word;
+			clearVariables();
+		}
 		else if (gs == GAME_STATUS::WON)
 			cout << "You win!";
 
@@ -193,7 +204,6 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 
 	word = stringTolower(word);
 	system("cls");
-	cout << word;
 	cout << "+---------------------------------+" << endl;
 	cout << "|            HANG MAN             |" << endl;
 	cout << "+---------------------------------+" << endl;
@@ -244,7 +254,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 
 	isGameOver = displayLettersInWord(word);
 	isHung = mistakes == 6;
-	cout << isGameOver;
+
 	for (int i = 0; i < padLenght - 1; i++)
 	{
 		cout << " ";
@@ -269,7 +279,8 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 		cin >> userChoice;
 		userChoice = tolower(userChoice);
 		isRepeated = isLetterRepeated(userChoice);
-		cout << "\nYou have already used this letter!\nPlese try again!\n";
+		if (isRepeated)
+			cout << "\nYou have already used this letter!\nPlese try again!\n";
 
 	} while (isRepeated);
 
@@ -287,40 +298,3 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	cout << mistakes;
 	return GAME_STATUS::RUNNING;
 }
-/*
-+---------------------------------+
-|             HANG MAN            |
-+---------------------------------+
-|               |                 |
-|               |                 |
-|               O                 |
-|              /|\                |
-|               |                 |
-|              / \                |
-|         +----------+            |
-|         |          |            |
-+---------------------------------+
-|        Available letters        |
-+---------------------------------+
-|     A B C D E F G H I J K L M   |
-|     N O P Q R S T U V W X Y Z   |
-+---------------------------------+
-|         Guess the word          |
-+---------------------------------+
-|            _ _ _ _              |
-+---------------------------------+
-
-1) User enters a letter
-2) check if that letter is in our word
-	if yes => add this letter to guessedLettersString
-3)	add letter to usedLettersArray
-4) displayAlphabet
-   loop A - Z => is current letter in usedLettersString
-	if true => display space
-	else => display letter
-5) Loop each word letter
-	if current letter is in guessedLettersString
-		=> display letter + space
-	else
-		=> display underscore + space
-*/
