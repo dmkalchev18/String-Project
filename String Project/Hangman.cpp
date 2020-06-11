@@ -118,15 +118,21 @@ void deleteLetters(char userChoice)
 	}
 }
 
-void displayLettersInWord(string word)
+bool displayLettersInWord(string word)
 {
+	int counter = 0;
 	for (int i = 0; i < word.length(); i++)
 	{
-		if (usedLetters.find(word[i]) != string::npos)
+		if (usedLetters.find(word[i]) != string::npos) {
 			cout << word[i] << " ";
+			counter++;
+		}
 		else
 			cout << "_ ";
 	}
+
+	return (counter == word.length());
+
 }
 
 string stringTolower(string str)
@@ -141,11 +147,19 @@ string stringTolower(string str)
 void mainHangmanMenu() {
 	int mistakes = 0;
 	bool isWordGuessed = false;
+	GAME_STATUS gs;
 	string word = pickRandomWord();
 
+
 	do {
-		displayHangman(mistakes, word);
-	} while (isWordGuessed || mistakes < 6);
+		gs = displayHangman(mistakes, word);
+
+		if (gs == GAME_STATUS::HUNG)
+			cout << "HUNG";
+		else if (gs == GAME_STATUS::WON)
+			cout << "You win!";
+		
+	} while (gs == GAME_STATUS::RUNNING);
 
 }
 
@@ -185,10 +199,11 @@ bool getUniqueLettersInWord(string word)
 	return false;
 }
 
-void displayHangman(int& mistakes, string word)
+GAME_STATUS displayHangman(int& mistakes, string word)
 {
 	int padLenght = (34 - (word.length() * 2 - 1)) / 2;
-
+	bool isGameOver = false;
+	bool isMangalchoHanged = false;
 	char userChoice;
 
 
@@ -243,7 +258,9 @@ void displayHangman(int& mistakes, string word)
 		cout << " ";
 	}
 
-	displayLettersInWord(word);
+	isGameOver = displayLettersInWord(word);
+	isMangalchoHanged = mistakes == 6;
+	cout << isGameOver;
 	for (int i = 0; i < padLenght - 1; i++)
 	{
 		cout << " ";
@@ -252,6 +269,15 @@ void displayHangman(int& mistakes, string word)
 	cout << "|" << endl;
 	cout << "+---------------------------------+" << endl;
 
+	if (isGameOver)
+	{
+		return GAME_STATUS::WON;
+	}
+	else if (isMangalchoHanged)
+	{
+		return GAME_STATUS::HUNG;
+	}
+	
 	cout << "Enter a letter: ";
 
 	cin >> userChoice;
@@ -269,7 +295,7 @@ void displayHangman(int& mistakes, string word)
 	usedLetters += userChoice;
 	//usedLetters[usedLettersCounter++] = userChoice;
 	cout << mistakes;
-
+	return GAME_STATUS::RUNNING;
 }
 /*
 +---------------------------------+

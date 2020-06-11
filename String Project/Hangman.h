@@ -3,8 +3,14 @@
 #include <string>
 using namespace std;
 
+enum GAME_STATUS {
+	RUNNING,
+	HUNG,
+	WON
+};
+
 string pickRandomWord();
-void displayHangman(int& mistakes, string word);
+GAME_STATUS displayHangman(int& mistakes, string word);
 void init();
 void mainHangmanMenu();
   
