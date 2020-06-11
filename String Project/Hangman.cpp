@@ -150,7 +150,6 @@ void mainHangmanMenu() {
 	GAME_STATUS gs;
 	string word = pickRandomWord();
 
-
 	do {
 		gs = displayHangman(mistakes, word);
 
@@ -158,9 +157,14 @@ void mainHangmanMenu() {
 			cout << "HUNG";
 		else if (gs == GAME_STATUS::WON)
 			cout << "You win!";
-		
+
 	} while (gs == GAME_STATUS::RUNNING);
 
+}
+
+bool isLetterRepeated(char userChoice)
+{
+	return usedLetters.find(userChoice) != string::npos;
 }
 
 string getGuessedLetter(string word, char letters[])
@@ -178,32 +182,12 @@ string getGuessedLetter(string word, char letters[])
 	return "_ ";
 }
 
-bool getUniqueLettersInWord(string word)
-{
-	int counter = 0;
-	for (int i = 0; i < word.length(); i++)
-	{
-		for (int j = 0; j < correctLettersCounter; j++)
-		{
-			if (word.find(correctLetters[j]) != string::npos)
-			{
-				counter++;
-			}
-		}
-
-	}
-	if (counter == word.length())
-	{
-		return true;
-	}
-	return false;
-}
-
 GAME_STATUS displayHangman(int& mistakes, string word)
 {
 	int padLenght = (34 - (word.length() * 2 - 1)) / 2;
 	bool isGameOver = false;
-	bool isMangalchoHanged = false;
+	bool isHung = false;
+	bool isRepeated = false;
 	char userChoice;
 
 
@@ -259,7 +243,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	}
 
 	isGameOver = displayLettersInWord(word);
-	isMangalchoHanged = mistakes == 6;
+	isHung = mistakes == 6;
 	cout << isGameOver;
 	for (int i = 0; i < padLenght - 1; i++)
 	{
@@ -273,17 +257,23 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	{
 		return GAME_STATUS::WON;
 	}
-	else if (isMangalchoHanged)
+	else if (isHung)
 	{
 		return GAME_STATUS::HUNG;
 	}
-	
-	cout << "Enter a letter: ";
 
-	cin >> userChoice;
-	userChoice = tolower(userChoice);
+	do
+	{
+		cout << "Enter a letter: ";
 
+		cin >> userChoice;
+		userChoice = tolower(userChoice);
+		isRepeated = isLetterRepeated(userChoice);
+		cout << "\nYou have already used this letter!\nPlese try again!\n";
 
+	} while (isRepeated);
+
+	usedLetters += userChoice;
 	if (checkLetters(word, userChoice))
 	{
 		correctLetters[correctLettersCounter++] = userChoice;
@@ -292,7 +282,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 		mistakes++;
 
 	deleteLetters(userChoice);
-	usedLetters += userChoice;
+
 	//usedLetters[usedLettersCounter++] = userChoice;
 	cout << mistakes;
 	return GAME_STATUS::RUNNING;
