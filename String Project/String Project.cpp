@@ -37,28 +37,25 @@ bool textMenu()
 	cout << "5. Delete all information in the text" << endl;
 	cout << "6. Back" << endl;
 	cout << endl;
-	textRetry:
 	cout << "Enter your choice: ";
 	choice = readInt("Enter your choice: ");
 	cout << endl;
+	system("cls");
 	switch (choice)
 	{
 		case 1:
-			system("cls");
 			cout << "Current Text:" << endl;
 			displayFormatedText(text);
 			return true;
 			break;
 		case 2:
-			system("cls");
 			cout << "Please enter the new data: " << endl;
 			cin.ignore();
 			getline(cin, newData);
 			rewriteData(newData);
 			return true;
 			break;
-		case 3:
-			system("cls");
+		case 3:	
 			cout << "Please enter the data you want to add to the existing text: " << endl;
 			cin.ignore();
 			getline(cin, newData);
@@ -66,7 +63,6 @@ bool textMenu()
 			return true;
 			break;
 		case 4:
-			system("cls");
 			cout << "Please enter the word you want to search in the text: ";
 			cin >> word;
 			cout << "\nResults: " << endl;
@@ -74,7 +70,6 @@ bool textMenu()
 			return true;
 			break;
 		case 5:
-			system("cls");
 			deleteData();
 			cout << "Data succesfully deleted!" << endl;
 			cout << endl;
@@ -84,7 +79,6 @@ bool textMenu()
 			return false;
 			break;
 		default:
-			goto textRetry;
 			break;
 	}
 	
