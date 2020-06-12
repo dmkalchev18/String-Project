@@ -15,10 +15,6 @@ char correctLetters[26];
 int correctLettersCounter = 0, usedLettersCounter = 0;
 
 void initGameWord() {
-	//string text;
-	//extractData(text);
-	//int startPos, endPos;
-	//int v1 = rand() % 100;
 	gameWords.push_back("Banana");
 	gameWords.push_back("Airplane");
 	gameWords.push_back("Cousin");
@@ -57,7 +53,7 @@ void initGameWord() {
 	gameWords.push_back("China");
 	gameWords.push_back("Economy");
 	gameWords.push_back("Makeup");
-	gameWords.push_back("Ruller");
+	gameWords.push_back("Ruler");
 	gameWords.push_back("Pensil");
 	gameWords.push_back("Cartoon");
 	gameWords.push_back("Planet");
@@ -65,6 +61,12 @@ void initGameWord() {
 	gameWords.push_back("Mousepad");
 	gameWords.push_back("Notebook");
 	gameWords.push_back("Desk");
+	gameWords.push_back("Glass");
+	gameWords.push_back("Cupboard");
+	gameWords.push_back("Bear");
+	gameWords.push_back("Basement");
+	gameWords.push_back("Waffle");
+	gameWords.push_back("Monitor");
 }
 
 void clearVariables() {
@@ -170,10 +172,10 @@ void mainHangmanMenu() {
 		gs = displayHangman(mistakes, word);
 
 		if (gs == GAME_STATUS::HUNG) {
-			cout << "You lose!\nThe correct word was: " << word;
+			cout << "You lose!\nThe correct word was: " << word << endl << endl;
 		}
 		else if (gs == GAME_STATUS::WON)
-			cout << "You win!";
+			cout << "You win!\n";
 
 
 	} while (gs == GAME_STATUS::RUNNING);
@@ -210,7 +212,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 
 
 	word = stringToLower(word);
-	
+
 	system("cls");
 	cout << "+---------------------------------+" << endl;
 	cout << "|            HANG MAN             |" << endl;
