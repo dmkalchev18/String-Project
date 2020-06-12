@@ -28,7 +28,7 @@ void greetings() {
 	cout << endl;
 }
 
-bool mainMenu(string text,vector<string> results2) {
+bool mainMenu(string text) {
 	int choice;
 
 	cout << "|==========|";
@@ -46,8 +46,7 @@ bool mainMenu(string text,vector<string> results2) {
 		mainHangmanMenu();
 		return true;
 		case 2:
-		findSentence(text,"elek",results2);
-		displaySentence(results2);
+		findSentence(text,"elek");
 			break;
 		case 3:
 			break;
@@ -65,7 +64,6 @@ int main()
 
 	srand(time(NULL));
 	string results[100];
-	vector<string> results2;
 	init();
 	int mistakes = 0;
 	bool isRunning = true;
@@ -73,8 +71,7 @@ int main()
 	extractData(text);
 	cout << text;
 	
-	
 	do{
-		isRunning = mainMenu(text,results2);
+		isRunning = mainMenu(text);
 	} while(isRunning);
 }

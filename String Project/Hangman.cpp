@@ -75,6 +75,7 @@ void clearVariables() {
 }
 
 void initAvLetters() {
+	avLetters.clear();
 	for (char i = 'A'; i <= 'Z'; i++)
 	{
 		avLetters.push_back(i);
@@ -158,16 +159,18 @@ void mainHangmanMenu() {
 	GAME_STATUS gs;
 
 	string word = pickRandomWord();
+	clearVariables();
+	initAvLetters();
 
 	do {
 		gs = displayHangman(mistakes, word);
 
 		if (gs == GAME_STATUS::HUNG) {
 			cout << "You lose!\nThe correct word was: " << word;
-			clearVariables();
 		}
 		else if (gs == GAME_STATUS::WON)
 			cout << "You win!";
+
 
 	} while (gs == GAME_STATUS::RUNNING);
 
@@ -203,6 +206,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 
 
 	word = stringTolower(word);
+	
 	system("cls");
 	cout << "+---------------------------------+" << endl;
 	cout << "|            HANG MAN             |" << endl;
@@ -220,8 +224,8 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 		}
 	}
 
-	cout << "|         +----------+            |" << endl;
-	cout << "|         |          |            |" << endl;
+	cout << "|           +----------+            |" << endl;
+	cout << "|           |          |            |" << endl;
 	cout << "+---------------------------------+" << endl;
 	cout << "|        Available letters        |" << endl;
 	cout << "+---------------------------------+" << endl;

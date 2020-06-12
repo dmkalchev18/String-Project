@@ -6,7 +6,6 @@
 using namespace std;
 
 string results[100];
-vector<string>results2;
 
 bool isInFoundPositions(int num, int arr[], int FoundPositionsCounter)
 {
@@ -30,7 +29,7 @@ void extractData(string& data)
 int getPositionsOfFoundSentences(int* arr, string text, string toFind)
 {
 	int i = 0;
-	int foundPos = -1;
+	size_t foundPos = -1;
 	while (true)
 	{
 		foundPos = text.find(toFind, foundPos + 1);
@@ -42,49 +41,39 @@ int getPositionsOfFoundSentences(int* arr, string text, string toFind)
 	return i;
 }
 
-void findSentence(string text, string word, vector<string>& resultSentences)
+void findSentence(string text, string word)
 {
-	int foundPositions[100];
-	int positionCounter = getPositionsOfFoundSentences(foundPositions, text, word);
-	//int foundPosition = text.find(word);
-
-	if (foundPositions[0] != string::npos)
+	int pos;
+	int index = 0;
+	int startPos, endPos;
+	do
 	{
-		for (int i = 0; i < positionCounter; i++)
+		pos = text.find(word, index);
+		if (pos != string::npos)
 		{
-			size_t startSentencePosition = foundPositions[i];
-			size_t endSentencePosition = foundPositions[i];
-			while (true)
-			{
-				if (text[startSentencePosition] == '.' or text[startSentencePosition] == '!' or text[startSentencePosition] == '?' or startSentencePosition == 0)
-					break;
-				startSentencePosition--;
-			}
-			while (true)
-			{
-				if (text[endSentencePosition] == '.' or text[endSentencePosition] == '!' or text[endSentencePosition] == '?')
-					break;
-				endSentencePosition++;
-			}
-			/*for (int j = startSentencePosition; j < endSentencePosition; j++)
-			{
-				cout << text[j];
-			}*/
-			if (startSentencePosition == 0)
-				resultSentences.push_back(text.substr(startSentencePosition, endSentencePosition-startSentencePosition));
-			else
-				resultSentences.push_back(text.substr(startSentencePosition + 2, endSentencePosition-startSentencePosition));
-			/*return text.substr(startSentencePosition + 2, endSentencePosition);*/
-		}
-	}
-	else
-		cout << "No match";
-}
+			startPos = pos;
+			endPos = pos;
 
-void displaySentence(vector<string> result) 
-{
-	for (int i = 0; i < result.size(); i++)
-	{
-		cout << result[i] << endl;
-	}
+			while (true)
+			{
+				if (text[startPos] == '.' or text[startPos] == '!' or text[startPos] == '?' or startPos == 0)
+					break;
+				startPos--;
+			}
+			while (true)
+			{
+				if (text[endPos] == '.' or text[endPos] == '!' or text[endPos] == '?')
+					break;
+				endPos++;
+			}
+			
+			for (int i = startPos+2; i <= endPos; i++)
+			{
+				cout << text[i];
+			}
+
+			index = endPos + 1;
+		}
+	} while (pos != string::npos);
+	cout << endl;
 }
