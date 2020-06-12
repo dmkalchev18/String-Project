@@ -148,11 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Hangman.cpp" />
+    <ClCompile Include="helperFunctions.cpp" />
     <ClCompile Include="Search.cpp" />
     <ClCompile Include="String Project.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hangman.h" />
+    <ClInclude Include="helperFunctions.h" />
     <ClInclude Include="Search.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
