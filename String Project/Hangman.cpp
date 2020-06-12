@@ -14,6 +14,7 @@ string usedLetters;
 char correctLetters[26];
 int correctLettersCounter = 0, usedLettersCounter = 0;
 
+//Initialise all of the words, which the game will use
 void initGameWord() {
 	gameWords.push_back("Banana");
 	gameWords.push_back("Airplane");
@@ -63,6 +64,7 @@ void initGameWord() {
 	gameWords.push_back("Desk");
 }
 
+//This function resets the data when a new game of hangman is played
 void clearVariables() {
 	for (int i = 0; i < 26; i++)
 	{
@@ -74,6 +76,7 @@ void clearVariables() {
 	usedLettersCounter = 0;
 }
 
+//This function clears and resets the content of the avLetters vector
 void initAvLetters() {
 	avLetters.clear();
 	for (char i = 'A'; i <= 'Z'; i++)
@@ -82,6 +85,7 @@ void initAvLetters() {
 	}
 }
 
+// initialises all of the hangman parts
 void initHangLines() {
 	hangLines.push_back("|                |                |");
 	hangLines.push_back("|                |                |");
@@ -91,21 +95,24 @@ void initHangLines() {
 	hangLines.push_back("|               / \\               |");
 }
 
+// combine all the init functions in one
 void init() {
 	initGameWord();
 	initAvLetters();
 	initHangLines();
-
 }
 
+// pick random word from the word list
 string pickRandomWord() {
 	int randomIndex;
 	int getRandom = rand();
+	
 	randomIndex = getRandom % gameWords.size();
 	return gameWords[randomIndex];
 }
 
-bool checkLetters(string word, char userChoice) {
+//Checks wether a certain char is contained in a word
+bool isLetterInWord(string word, char userChoice) {
 	for (int i = 0; i < word.size(); i++)
 	{
 		if (userChoice == tolower(word[i]))
@@ -118,6 +125,7 @@ void deleteLetters(char userChoice)
 {
 	for (int i = 0; i < avLetters.size(); i++)
 	{
+		// checks when to remove letter from the available letters menu
 		if (tolower(avLetters[i]) == userChoice)
 		{
 			avLetters[i] = ' ';
@@ -131,6 +139,7 @@ bool displayLettersInWord(string word)
 	int counter = 0;
 	for (int i = 0; i < word.length(); i++)
 	{
+		// checks if the user guessed a letter in the word
 		if (usedLetters.find(word[i]) != string::npos) {
 			cout << word[i] << " ";
 			counter++;
@@ -145,6 +154,7 @@ bool displayLettersInWord(string word)
 
 string stringToLower(string str)
 {
+	// convert all the upper cases to lower case characters
 	for (int i = 0; i < str.length(); i++)
 	{
 		str[i] = tolower(str[i]);
@@ -163,13 +173,15 @@ void mainHangmanMenu() {
 	initAvLetters();
 
 	do {
+		// display the Hangman
 		gs = displayHangman(mistakes, word);
 
+		// checks the game status
 		if (gs == GAME_STATUS::HUNG) {
-			cout << "You lose!\nThe correct word was: " << word<<endl;
+			cout << "You lose!\nThe correct word was: " << word << endl << endl;
 		}
 		else if (gs == GAME_STATUS::WON)
-			cout << "You win!";
+			cout << "You win!\n\n";
 
 
 	} while (gs == GAME_STATUS::RUNNING);
@@ -178,36 +190,23 @@ void mainHangmanMenu() {
 
 bool isLetterRepeated(char userChoice)
 {
+	// checks if we have inputed the same letter
 	return usedLetters.find(userChoice) != string::npos;
-}
-
-string getGuessedLetter(string word, char letters[])
-{
-	for (size_t i = 0; i < word.length(); i++)
-	{
-		if (word[i] == ' ')
-			return "  ";
-		for (int j = 0; j < word.length(); j++)
-		{
-			if (word[i] == letters[j])
-				return letters[j] + " ";
-		}
-	}
-	return "_ ";
 }
 
 GAME_STATUS displayHangman(int& mistakes, string word)
 {
-	int padLenght = (34 - (word.length() * 2 - 1)) / 2;
+	//padLenght represents the distance between the border of the box and the first blank letter
+	int padLenght = (34 - (word.length() * 2 - 1)) / 2; 
 	bool isGameOver = false;
 	bool isHung = false;
 	bool isRepeated = false;
 	char userChoice;
 
-
 	word = stringToLower(word);
-	
+
 	system("cls");
+	// displaying the hangman user interface
 	cout << "+---------------------------------+" << endl;
 	cout << "|            HANG MAN             |" << endl;
 	cout << "+---------------------------------+" << endl;
@@ -230,6 +229,8 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	cout << "|        Available letters        |" << endl;
 	cout << "+---------------------------------+" << endl;
 	cout << "|     ";
+
+	//displaying the available letters
 
 	for (int i = 0; i < 13; i++)
 	{
@@ -267,6 +268,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	cout << "|" << endl;
 	cout << "+---------------------------------+" << endl;
 
+	// check the game status
 	if (isGameOver)
 	{
 		return GAME_STATUS::WON;
@@ -289,7 +291,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	} while (isRepeated);
 
 	usedLetters += userChoice;
-	if (checkLetters(word, userChoice))
+	if (isLetterInWord(word, userChoice))
 	{
 		correctLetters[correctLettersCounter++] = userChoice;
 	}
@@ -297,8 +299,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 		mistakes++;
 
 	deleteLetters(userChoice);
-
-	//usedLetters[usedLettersCounter++] = userChoice;
+	
 	cout << mistakes;
 	return GAME_STATUS::RUNNING;
 }

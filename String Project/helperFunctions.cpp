@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 
+//readInt is used to make sure the user enters only int numbers, not letters
 int readInt(string s)
 {
 	int a;
@@ -23,6 +24,7 @@ int readInt(string s)
 	return a;
 }
 
+//This is the main menu for the the text operations and commands
 bool textMenu()
 {
 	string text;
@@ -32,65 +34,54 @@ bool textMenu()
 	string newData;
 	cout << "| ===== TEXT MENU ===== |" << endl;
 	cout << "1. Display current text" << endl;
-	cout << "2. Write / Rewrite the text" << endl;
+	cout << "2. Rewrite the text" << endl;
 	cout << "3. Add information to the text" << endl;
 	cout << "4. Search information in the text" << endl;
 	cout << "5. Delete all information in the text" << endl;
 	cout << "6. Back" << endl;
 	cout << endl;
-textRetry:
 	cout << "Enter your choice: ";
 	choice = readInt("Enter your choice: ");
 	cout << endl;
+	system("cls");
 	switch (choice)
 	{
-	case 1:
-		system("cls");
+	case 1:		
 		cout << "Current Text:" << endl;
 		displayFormatedText(text);
 		return true;
-		break;
 	case 2:
-		system("cls");
 		cout << "Please enter the new data: " << endl;
 		cin.ignore();
 		getline(cin, newData);
 		rewriteData(newData);
 		return true;
-		break;
 	case 3:
-		system("cls");
 		cout << "Please enter the data you want to add to the existing text: " << endl;
 		cin.ignore();
 		getline(cin, newData);
 		addToData(newData);
 		return true;
-		break;
 	case 4:
-		system("cls");
 		cout << "Please enter the word you want to search in the text: ";
 		cin >> word;
 		cout << "\nResults: " << endl;
 		findSentence(text, word);
 		return true;
-		break;
 	case 5:
-		system("cls");
 		deleteData();
 		cout << "Data succesfully deleted!" << endl;
 		cout << endl;
 		return true;
-		break;
 	case 6:
 		return false;
-		break;
 	default:
-		goto textRetry;
 		break;
 	}
 
 }
 
+//This is the main menu function, which grants access to all the other functions
 bool mainMenu() {
 	int choice;
 	string word;

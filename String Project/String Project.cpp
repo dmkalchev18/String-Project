@@ -11,7 +11,6 @@ using namespace std;
 int main()
 {
 	system("color 0b");
-
 	srand(time(NULL));
 	string results[100];
 	init();
