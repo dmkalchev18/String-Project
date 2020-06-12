@@ -71,7 +71,7 @@ void findSentence(string text, string word)
 			{
 				cout << text[i];
 			}
-
+			cout << endl;
 			index = endPos + 1;
 		}
 	} while (pos != string::npos);

@@ -83,12 +83,12 @@ void initAvLetters() {
 }
 
 void initHangLines() {
-	hangLines.push_back("|               |                 |");
-	hangLines.push_back("|               |                 |");
-	hangLines.push_back("|               O                 |");
-	hangLines.push_back("|              /|\\                |");
-	hangLines.push_back("|               |                 |");
-	hangLines.push_back("|              / \\                |");
+	hangLines.push_back("|                |                |");
+	hangLines.push_back("|                |                |");
+	hangLines.push_back("|                O                |");
+	hangLines.push_back("|               /|\\               |");
+	hangLines.push_back("|                |                |");
+	hangLines.push_back("|               / \\               |");
 }
 
 void init() {
@@ -224,8 +224,8 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 		}
 	}
 
-	cout << "|           +----------+            |" << endl;
-	cout << "|           |          |            |" << endl;
+	cout << "|           +-----------+         |" << endl;
+	cout << "|           |           |         |" << endl;
 	cout << "+---------------------------------+" << endl;
 	cout << "|        Available letters        |" << endl;
 	cout << "+---------------------------------+" << endl;

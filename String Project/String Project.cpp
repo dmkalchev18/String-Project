@@ -46,7 +46,7 @@ bool mainMenu(string text) {
 		mainHangmanMenu();
 		return true;
 		case 2:
-		findSentence(text,"elek");
+		findSentence(text,"ga");
 			break;
 		case 3:
 			break;
