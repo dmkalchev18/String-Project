@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include "Hangman.h"
+#include "Search.h";
 using namespace std;
 
 vector<string> gameWords;
@@ -14,6 +15,9 @@ char correctLetters[26];
 int correctLettersCounter = 0, usedLettersCounter = 0;
 
 void initGameWord() {
+	//string text;
+	//extractData(text);
+	//int startPos, endPos;
 	//int v1 = rand() % 100;
 	gameWords.push_back("Banana");
 	gameWords.push_back("Airplane");
@@ -143,7 +147,7 @@ bool displayLettersInWord(string word)
 
 }
 
-string stringTolower(string str)
+string stringToLower(string str)
 {
 	for (int i = 0; i < str.length(); i++)
 	{
@@ -205,7 +209,7 @@ GAME_STATUS displayHangman(int& mistakes, string word)
 	char userChoice;
 
 
-	word = stringTolower(word);
+	word = stringToLower(word);
 	
 	system("cls");
 	cout << "+---------------------------------+" << endl;

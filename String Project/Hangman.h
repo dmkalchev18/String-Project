@@ -13,4 +13,5 @@ string pickRandomWord();
 GAME_STATUS displayHangman(int& mistakes, string word);
 void init();
 void mainHangmanMenu();
+string stringToLower(string str);
   

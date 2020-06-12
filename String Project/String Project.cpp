@@ -22,38 +22,101 @@ int readInt(string s)
 	return a;
 }
 
-void greetings() {
-	cout << "Hello my friend\n";
-	cout << "Welcome to our shitty bugged program called besenica";
-	cout << endl;
-}
-
-bool mainMenu(string text) {
+bool textMenu()
+{
+	string text;
+	extractData(text);
 	int choice;
-
-	cout << "|==========|";
-	cout << "Menu choice\n";
-	cout << "1. Play Hangman\n";
-	cout << "2. neshto2\n";
-	cout << "3. neshto3\n";
-	cout << "4. neshto4\n";
+	string word;
+	string newData;
+	cout << "| ===== TEXT MENU ===== |" << endl;
+	cout << "1. Display current text" << endl;
+	cout << "2. Write / Rewrite the text" << endl;
+	cout << "3. Add information to the text" << endl;
+	cout << "4. Search information in the text" << endl;
+	cout << "5. Delete all information in the text" << endl;
+	cout << "6. Back" << endl;
+	cout << endl;
+	textRetry:
 	cout << "Enter your choice: ";
 	choice = readInt("Enter your choice: ");
+	cout << endl;
+	switch (choice)
+	{
+		case 1:
+			system("cls");
+			cout << "Current Text:" << endl;
+			displayFormatedText(text);
+			return true;
+			break;
+		case 2:
+			system("cls");
+			cout << "Please enter the new data: " << endl;
+			cin.ignore();
+			getline(cin, newData);
+			rewriteData(newData);
+			return true;
+			break;
+		case 3:
+			system("cls");
+			cout << "Please enter the data you want to add to the existing text: " << endl;
+			cin.ignore();
+			getline(cin, newData);
+			addToData(newData);
+			return true;
+			break;
+		case 4:
+			system("cls");
+			cout << "Please enter the word you want to search in the text: ";
+			cin >> word;
+			cout << "\nResults: " << endl;
+			findSentence(text,word);
+			return true;
+			break;
+		case 5:
+			system("cls");
+			deleteData();
+			cout << "Data succesfully deleted!" << endl;
+			cout << endl;
+			return true;
+			break;
+		case 6:
+			return false;
+			break;
+		default:
+			goto textRetry;
+			break;
+	}
+	
+}
 
+bool mainMenu() {
+	int choice;
+	string word;
+	bool isRunningTextMenu = false;
+	cout << "| ===== MAIN MENU ===== |"<<endl;
+	cout << "1. Play Hangman\n";
+	cout << "2. Text Menu\n";
+	cout << "3. Exit\n";
+	cout << endl;
+	cout << "Enter your choice: ";
+	choice = readInt("Enter your choice: ");
+	cout << endl;
 	switch (choice)
 	{
 		case 1:
 		mainHangmanMenu();
 		return true;
 		case 2:
-		findSentence(text,"ga");
-			break;
+			do
+			{
+				isRunningTextMenu = textMenu();
+			} while (isRunningTextMenu);
+			return true;
 		case 3:
-			break;
-		case 4:
-			break;
-		default:
+			cout << "Goodbye!" << endl;
 			return false;
+		default:
 			break;
 	}
 }
@@ -67,11 +130,8 @@ int main()
 	init();
 	int mistakes = 0;
 	bool isRunning = true;
-	string text;
-	extractData(text);
-	cout << text;
 	
 	do{
-		isRunning = mainMenu(text);
+		isRunning = mainMenu();
 	} while(isRunning);
 }
